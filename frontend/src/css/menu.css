@@ -1,0 +1,125 @@
+/* ============================================
+   30 SEGUNDOS - Menu Principal
+   ============================================ */
+
+.menu-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+}
+
+.menu-header {
+    margin-bottom: 50px;
+}
+
+.menu-header .logo {
+    font-size: 80px;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+}
+
+.menu-header h1 {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, var(--yellow), var(--orange));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.menu-header .tagline {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+}
+
+.menu-content {
+    width: 100%;
+    max-width: 400px;
+}
+
+.menu-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.btn-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px 30px;
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    transition: all var(--transition);
+    cursor: pointer;
+}
+
+.btn-menu .icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.btn-menu .text {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.btn-menu .desc {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+.btn-menu.btn-primary {
+    background: linear-gradient(135deg, var(--green), var(--green-dark));
+    color: white;
+}
+
+.btn-menu.btn-secondary {
+    background: var(--bg-light);
+    border: 2px solid var(--blue);
+    color: white;
+}
+
+.btn-menu:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Modal de entrar */
+.modal-content h2 {
+    margin-bottom: 20px;
+    color: var(--yellow);
+}
+
+.modal-content input {
+    text-align: center;
+    font-size: 2rem;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    margin: 20px 0;
+}
+
+.menu-footer {
+    margin-top: 50px;
+    color: var(--text-muted);
+}
+
+/* Responsivo */
+@media (max-width: 480px) {
+    .menu-header h1 {
+        font-size: 2rem;
+    }
+    
+    .menu-header .logo {
+        font-size: 60px;
+    }
+    
+    .btn-menu {
+        padding: 20px;
+    }
+}

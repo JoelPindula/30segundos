@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>30 Segundos - Jogador</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/player.css">
+</head>
+<body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+    
+    <div class="player-container">
+        
+        <!-- AGUARDANDO INÍCIO -->
+        <div id="screenWaiting" class="screen active">
+            <div class="screen-content">
+                <div class="icon-large">📱</div>
+                <h1>Conectado!</h1>
+                <p class="game-code-display">Partida: <strong id="gameCode">----</strong></p>
+                <p class="waiting-text">Aguardando o jogo iniciar...</p>
+            </div>
+        </div>
+        
+        <!-- AGUARDANDO RODADA -->
+        <div id="screenWaitingRound" class="screen">
+            <div class="screen-content">
+                <div class="icon-large">⏳</div>
+                <h2>Aguardando próxima rodada...</h2>
+            </div>
+        </div>
+        
+        <!-- SUA VEZ (RODADA NORMAL) -->
+        <div id="screenYourTurn" class="screen">
+            <div class="screen-content">
+                <h2>🎯 Sua Vez!</h2>
+                <div id="yourTeamName" class="team-name">Time</div>
+                <div class="side-info">
+                    <p>Comece pelo lado:</p>
+                    <div id="startSide" class="start-side">AMARELO</div>
+                </div>
+                <button class="btn-primary btn-xlarge" onclick="viewCard()">👁️ VER CARTA</button>
+            </div>
+        </div>
+        
+        <!-- JOGANDO (RODADA NORMAL) -->
+        <div id="screenPlaying" class="screen">
+            <div class="playing-content">
+                <div class="timer-bar">
+                    <div id="timerPlayer" class="timer-value">30</div>
+                </div>
+                <div id="sideIndicator" class="side-indicator">🟡 AMARELO</div>
+                <div id="wordsContainer" class="words-container"></div>
+                <p class="hint">Toque na palavra quando acertarem</p>
+            </div>
+        </div>
+        
+        <!-- DESAFIO - PRONTO -->
+        <div id="screenChallenge" class="screen">
+            <div class="screen-content special-screen challenge">
+                <div class="icon-large">⚡</div>
+                <h2>DESAFIO!</h2>
+                <div id="challengeTextPlayer" class="special-text">Carregando...</div>
+                <div class="reward-info">
+                    <span class="positive">✓ +5 casas</span>
+                    <span class="negative">✗ -2 casas</span>
+                </div>
+                <button class="btn-primary btn-xlarge" onclick="startChallenge()">▶️ COMEÇAR</button>
+            </div>
+        </div>
+        
+        <!-- DESAFIO - EXECUTANDO -->
+        <div id="screenChallengeRunning" class="screen">
+            <div class="playing-content special-playing challenge">
+                <div class="timer-bar">
+                    <div id="timerChallenge" class="timer-value">30</div>
+                </div>
+                <div class="icon-large">⚡</div>
+                <div id="challengeTextRunning" class="special-text">Desafio...</div>
+                <p class="hint">Execute o desafio!</p>
+            </div>
+        </div>
+        
+        <!-- CARTA AMALDIÇOADA - PRONTO -->
+        <div id="screenCursed" class="screen">
+            <div class="screen-content special-screen cursed">
+                <div class="icon-large">💀</div>
+                <h2>CARTA AMALDIÇOADA!</h2>
+                <div id="cursedWordPlayer" class="cursed-word">PALAVRA</div>
+                <div class="reward-info">
+                    <span class="positive">✓ +2 casas</span>
+                    <span class="negative">✗ -5 casas</span>
+                </div>
+                <button class="btn-primary btn-xlarge" onclick="startCursed()">▶️ COMEÇAR</button>
+            </div>
+        </div>
+        
+        <!-- CARTA AMALDIÇOADA - EXECUTANDO -->
+        <div id="screenCursedRunning" class="screen">
+            <div class="playing-content special-playing cursed">
+                <div class="timer-bar">
+                    <div id="timerCursed" class="timer-value">30</div>
+                </div>
+                <div class="icon-large">💀</div>
+                <div id="cursedWordRunning" class="cursed-word">PALAVRA</div>
+                <p class="hint">Faça seu time adivinhar!</p>
+            </div>
+        </div>
+        
+        <!-- TEMPO ESGOTADO -->
+        <div id="screenTimeUp" class="screen">
+            <div class="screen-content">
+                <div class="icon-large">⏰</div>
+                <h2>Tempo Esgotado!</h2>
+                <p>Você marcou <strong id="finalHits">0</strong> palavras</p>
+                <p class="waiting-text">Aguardando confirmação...</p>
+            </div>
+        </div>
+        
+        <!-- VITÓRIA -->
+        <div id="screenVictory" class="screen">
+            <div class="screen-content victory">
+                <div class="icon-large">🏆</div>
+                <h1>VITÓRIA!</h1>
+                <h2 id="winnerNamePlayer">Time Vencedor</h2>
+                <button class="btn-primary" onclick="backToMenu()">Menu Principal</button>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <script src="/js/player.js"></script>
+</body>
+</html>

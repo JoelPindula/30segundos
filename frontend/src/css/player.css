@@ -1,0 +1,495 @@
+/* ============================================
+   30 SEGUNDOS v3.1 - PLAYER (CELULAR)
+   ============================================ */
+
+/* ============================================
+   CONTAINER PRINCIPAL
+   ============================================ */
+
+.player-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-dark);
+    overflow-x: hidden;
+}
+
+/* ============================================
+   TELAS
+   ============================================ */
+
+.screen {
+    display: none;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.screen-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+/* ============================================
+   ÍCONES E TEXTOS
+   ============================================ */
+
+.icon-large {
+    font-size: 5rem;
+    margin-bottom: 20px;
+}
+
+.game-code-display {
+    font-size: 1.3rem;
+    margin: 15px 0;
+    color: var(--text-light);
+}
+
+.game-code-display strong {
+    color: var(--yellow);
+    font-size: 1.5rem;
+}
+
+.waiting-text {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* ============================================
+   SUA VEZ - TELA
+   ============================================ */
+
+.team-name {
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 15px 40px;
+    border-radius: var(--radius-lg);
+    margin: 20px 0;
+}
+
+.team-name.yellow {
+    background: linear-gradient(135deg, var(--yellow), #f39c12);
+    color: var(--bg-dark);
+}
+
+.team-name.blue {
+    background: linear-gradient(135deg, var(--blue), #2980b9);
+    color: white;
+}
+
+.side-info {
+    margin: 25px 0;
+}
+
+.side-info p {
+    color: var(--text-muted);
+    margin-bottom: 10px;
+}
+
+.start-side {
+    font-size: 1.8rem;
+    font-weight: bold;
+    padding: 15px 35px;
+    border-radius: var(--radius);
+}
+
+.start-side.yellow {
+    background: linear-gradient(135deg, var(--yellow), #f39c12);
+    color: var(--bg-dark);
+}
+
+.start-side.blue {
+    background: linear-gradient(135deg, var(--blue), #2980b9);
+    color: white;
+}
+
+/* ============================================
+   JOGANDO - TELA
+   ============================================ */
+
+.playing-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.timer-bar {
+    background: var(--bg-card);
+    padding: 15px;
+    text-align: center;
+    border-bottom: 3px solid var(--bg-light);
+}
+
+.timer-value {
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--text-light);
+}
+
+.timer-value.warning {
+    color: var(--yellow);
+}
+
+.timer-value.danger {
+    color: var(--red);
+    animation: pulse-danger 0.5s infinite;
+}
+
+@keyframes pulse-danger {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.side-indicator {
+    text-align: center;
+    padding: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.side-indicator.yellow {
+    background: linear-gradient(135deg, var(--yellow), #f39c12);
+    color: var(--bg-dark);
+}
+
+.side-indicator.blue {
+    background: linear-gradient(135deg, var(--blue), #2980b9);
+    color: white;
+}
+
+.words-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.word-btn {
+    width: 100%;
+    padding: 18px 20px;
+    font-size: 1.3rem;
+    font-weight: 600;
+    background: var(--bg-card);
+    color: var(--text-light);
+    border: 2px solid var(--bg-light);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.word-btn:active {
+    transform: scale(0.98);
+}
+
+.word-btn.bonus {
+    border-color: var(--yellow);
+    background: linear-gradient(135deg, rgba(241, 196, 15, 0.2), rgba(241, 196, 15, 0.1));
+}
+
+.word-btn.bonus::after {
+    content: ' ⭐';
+}
+
+.word-btn.hit {
+    background: linear-gradient(135deg, var(--green), #27ae60);
+    color: white;
+    border-color: var(--green);
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.hint {
+    text-align: center;
+    padding: 15px;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    background: var(--bg-card);
+    border-top: 1px solid var(--bg-light);
+}
+
+/* ============================================
+   TELAS ESPECIAIS - DESAFIO E AMALDIÇOADA
+   ============================================ */
+
+.special-screen {
+    border-radius: var(--radius-lg);
+    padding: 30px 20px;
+    margin: 10px;
+}
+
+.special-screen.challenge {
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+}
+
+.special-screen.cursed {
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.special-screen .icon-large {
+    font-size: 4rem;
+    margin-bottom: 15px;
+}
+
+.special-screen h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+}
+
+.special-text {
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin: 20px 0;
+    line-height: 1.5;
+}
+
+.cursed-word {
+    font-size: 1.4rem;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: var(--radius);
+    margin: 20px 0;
+    letter-spacing: 1px;
+    word-break: break-word;
+}
+
+.reward-info {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px 0;
+    font-size: 1rem;
+}
+
+.reward-info .positive {
+    color: #2ecc71;
+    font-weight: 600;
+}
+
+.reward-info .negative {
+    color: #ff6b6b;
+    font-weight: 600;
+}
+
+/* ============================================
+   PLAYING ESPECIAL (DESAFIO/AMALDIÇOADA)
+   ============================================ */
+
+.special-playing {
+    min-height: 100vh;
+}
+
+.special-playing.challenge {
+    background: linear-gradient(180deg, #9b59b6, #8e44ad);
+}
+
+.special-playing.cursed {
+    background: linear-gradient(180deg, #e74c3c, #c0392b);
+}
+
+.special-playing .timer-bar {
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: none;
+}
+
+.special-playing .icon-large {
+    font-size: 4rem;
+    margin: 30px 0;
+}
+
+.special-playing .special-text {
+    font-size: 1.3rem;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.special-playing .cursed-word {
+    font-size: 1.5rem;
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.special-playing .hint {
+    background: rgba(0, 0, 0, 0.2);
+    border-top: none;
+    margin-top: auto;
+}
+
+/* ============================================
+   TEMPO ESGOTADO
+   ============================================ */
+
+#screenTimeUp .screen-content {
+    background: var(--bg-card);
+    margin: 20px;
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+}
+
+#screenTimeUp .icon-large {
+    font-size: 4rem;
+}
+
+#screenTimeUp h2 {
+    margin: 15px 0;
+}
+
+#screenTimeUp p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+#screenTimeUp strong {
+    color: var(--yellow);
+    font-size: 1.5rem;
+}
+
+/* ============================================
+   VITÓRIA
+   ============================================ */
+
+#screenVictory .screen-content {
+    background: linear-gradient(135deg, var(--yellow), #f39c12);
+    margin: 20px;
+    border-radius: var(--radius-lg);
+    padding: 40px 30px;
+    color: var(--bg-dark);
+}
+
+#screenVictory .icon-large {
+    font-size: 5rem;
+}
+
+#screenVictory h1 {
+    font-size: 2.5rem;
+    margin: 15px 0;
+}
+
+#screenVictory h2 {
+    font-size: 1.5rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+#screenVictory .btn-primary {
+    background: var(--bg-dark);
+    color: var(--yellow);
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+
+.btn-xlarge {
+    padding: 20px 50px;
+    font-size: 1.4rem;
+    margin-top: 25px;
+}
+
+/* ============================================
+   FULLSCREEN BUTTON
+   ============================================ */
+
+.fullscreen-btn {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 1px solid var(--bg-light);
+    color: var(--text-light);
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+
+@media (max-width: 380px) {
+    .icon-large {
+        font-size: 4rem;
+    }
+    
+    .team-name {
+        font-size: 1.6rem;
+        padding: 12px 30px;
+    }
+    
+    .start-side {
+        font-size: 1.5rem;
+        padding: 12px 25px;
+    }
+    
+    .word-btn {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+    
+    .timer-value {
+        font-size: 2.5rem;
+    }
+    
+    .special-screen .icon-large {
+        font-size: 3rem;
+    }
+    
+    .special-screen h2 {
+        font-size: 1.5rem;
+    }
+    
+    .special-text {
+        font-size: 1.1rem;
+        padding: 15px;
+    }
+    
+    .cursed-word {
+        font-size: 1.2rem;
+        padding: 15px;
+    }
+    
+    .btn-xlarge {
+        padding: 16px 40px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (min-width: 500px) {
+    .words-container {
+        max-width: 450px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    
+    .screen-content {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+    
+    .special-screen {
+        max-width: 450px;
+        margin: 20px auto;
+    }
+}

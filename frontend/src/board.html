@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Segundos - Tabuleiro</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/board.css">
+</head>
+<body>
+    <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+
+    <div class="board-container">
+        <!-- Header -->
+        <header class="board-header">
+            <div class="game-info">
+                <h1 id="gameName">30 Segundos</h1>
+                <div class="game-code">Código: <span id="gameCode">----</span></div>
+            </div>
+            <div class="round-info">Rodada <span id="roundNumber">0</span></div>
+        </header>
+        
+        <!-- Trilhas -->
+        <section class="tracks-section">
+            <div class="team-track yellow-track">
+                <div class="track-header">
+                    <div>
+                        <div class="track-team-name" id="team1Name">Time Amarelo</div>
+                        <div class="track-player">Jogador: <span id="team1Player">-</span></div>
+                    </div>
+                    <div class="track-position"><span id="team1Position">0</span><small>/30</small></div>
+                </div>
+                <div class="track-cells" id="track1Cells"></div>
+            </div>
+            
+            <div class="team-track blue-track">
+                <div class="track-header">
+                    <div>
+                        <div class="track-team-name" id="team2Name">Time Azul</div>
+                        <div class="track-player">Jogador: <span id="team2Player">-</span></div>
+                    </div>
+                    <div class="track-position"><span id="team2Position">0</span><small>/30</small></div>
+                </div>
+                <div class="track-cells" id="track2Cells"></div>
+            </div>
+        </section>
+        
+        <!-- Área Principal -->
+        <section class="main-area">
+            
+            <!-- AGUARDANDO JOGADORES -->
+            <div id="stateWaiting" class="state-panel active">
+                <div class="waiting-content">
+                    <h2>📱 Conecte o Celular</h2>
+                    <div class="qr-container" id="qrContainer"><p>Gerando QR...</p></div>
+                    <div class="player-url" id="playerUrl"></div>
+                    <div id="waitingStatus" class="waiting-status">
+                        <span class="status-waiting">⏳ Aguardando jogador conectar...</span>
+                    </div>
+                    <button id="btnStartGame" class="btn-start-game" onclick="startGame()">
+                        ⏳ Aguardando Jogador...
+                    </button>
+                </div>
+            </div>
+            
+            <!-- VEZ DO TIME (RODADA NORMAL) -->
+            <div id="statePlayerTurn" class="state-panel">
+                <div class="turn-content">
+                    <h2>🎯 Vez do Time</h2>
+                    <div class="current-team" id="currentTeamDisplay">Time Amarelo</div>
+                    <p class="current-player-name">Jogador: <strong id="currentPlayerDisplay">-</strong></p>
+                    <p class="instruction">Aguardando jogador ver a carta...</p>
+                </div>
+            </div>
+            
+            <!-- TIMER RODADA NORMAL -->
+            <div id="stateTimerRunning" class="state-panel">
+                <div class="timer-fullscreen">
+                    <div class="timer-display-large" id="timerDisplayLarge">30</div>
+                    <div class="timer-label">segundos</div>
+                    <div class="playing-team-indicator" id="playingTeamIndicator">Time</div>
+                </div>
+            </div>
+            
+            <!-- DESAFIO - MOSTRAR -->
+            <div id="stateChallenge" class="state-panel">
+                <div class="special-card challenge-card">
+                    <div class="special-icon">⚡</div>
+                    <h2>DESAFIO!</h2>
+                    <div class="special-text" id="challengeText">Carregando...</div>
+                    <div class="special-reward">
+                        <span class="reward-positive">✓ Completou: +5 casas</span>
+                        <span class="reward-negative">✗ Falhou: -2 casas</span>
+                    </div>
+                    <p class="instruction">Aguardando jogador iniciar...</p>
+                </div>
+            </div>
+            
+            <!-- DESAFIO - TIMER -->
+            <div id="stateChallengeTimer" class="state-panel">
+                <div class="timer-fullscreen challenge-bg">
+                    <div class="special-icon">⚡</div>
+                    <div class="timer-display-large" id="challengeTimerDisplay">30</div>
+                    <div class="special-text-small" id="challengeTextTimer">Desafio...</div>
+                </div>
+            </div>
+            
+            <!-- DESAFIO - CONFIRMAR -->
+            <div id="stateChallengeConfirm" class="state-panel">
+                <div class="confirm-special">
+                    <div class="special-icon">⚡</div>
+                    <h2>Desafio Finalizado!</h2>
+                    <p>O jogador completou o desafio?</p>
+                    <div class="confirm-buttons">
+                        <button class="btn-success btn-large" onclick="challengeSuccess()">✓ SIM (+5)</button>
+                        <button class="btn-danger btn-large" onclick="challengeFail()">✗ NÃO (-2)</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CARTA AMALDIÇOADA - MOSTRAR -->
+            <div id="stateCursed" class="state-panel">
+                <div class="special-card cursed-card">
+                    <div class="special-icon">💀</div>
+                    <h2>CARTA AMALDIÇOADA!</h2>
+                    <div class="cursed-word" id="cursedWord">PALAVRA</div>
+                    <div class="special-reward">
+                        <span class="reward-positive">✓ Adivinharam: +2 casas</span>
+                        <span class="reward-negative">✗ Erraram: -5 casas</span>
+                    </div>
+                    <p class="instruction">Aguardando jogador iniciar...</p>
+                </div>
+            </div>
+            
+            <!-- CARTA AMALDIÇOADA - TIMER -->
+            <div id="stateCursedTimer" class="state-panel">
+                <div class="timer-fullscreen cursed-bg">
+                    <div class="special-icon">💀</div>
+                    <div class="timer-display-large" id="cursedTimerDisplay">30</div>
+                    <div class="cursed-word-small" id="cursedWordTimer">PALAVRA</div>
+                </div>
+            </div>
+            
+            <!-- CARTA AMALDIÇOADA - CONFIRMAR -->
+            <div id="stateCursedConfirm" class="state-panel">
+                <div class="confirm-special cursed">
+                    <div class="special-icon">💀</div>
+                    <h2>Tempo Esgotado!</h2>
+                    <p>O time adivinhou a palavra?</p>
+                    <div class="confirm-buttons">
+                        <button class="btn-success btn-large" onclick="cursedSuccess()">✓ SIM (+2)</button>
+                        <button class="btn-danger btn-large" onclick="cursedFail()">✗ NÃO (-5)</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- RESULTADO DA RODADA -->
+            <div id="stateRoundResult" class="state-panel">
+                <div class="result-content">
+                    <h2 id="resultTitle" class="result-title">Rodada Finalizada!</h2>
+                    <div id="resultMoves" class="result-moves">+0 casas</div>
+                    <button class="btn-primary btn-large" onclick="nextRound()">➡️ Próxima Rodada</button>
+                </div>
+            </div>
+            
+        </section>
+        
+        <!-- Modal Confirmação Rodada Normal -->
+        <div id="confirmationModal" class="modal">
+            <div class="modal-content confirmation-content">
+                <h2>✅ Confirme os Acertos</h2>
+                <p>Clique nas palavras que o time acertou</p>
+                <div class="confirmation-cards">
+                    <div class="confirm-side yellow-side">
+                        <h3>🟡 Amarelo</h3>
+                        <div id="yellowConfirmList" class="confirm-words"></div>
+                    </div>
+                    <div class="confirm-side blue-side">
+                        <h3>🔵 Azul</h3>
+                        <div id="blueConfirmList" class="confirm-words"></div>
+                    </div>
+                </div>
+                <div class="confirmation-footer">
+                    <span>Confirmados: <strong id="confirmedCount">0</strong></span>
+                    <button class="btn-primary" onclick="confirmRound()">✓ Confirmar</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Modal Vitória -->
+        <div id="victoryModal" class="modal">
+            <div class="modal-content victory-content">
+                <div class="victory-icon">🏆</div>
+                <h1>VITÓRIA!</h1>
+                <h2 id="winnerName">Time Vencedor</h2>
+                <div class="victory-buttons">
+                    <button class="btn-secondary" onclick="backToMenu()">Menu</button>
+                    <button class="btn-primary" onclick="newGame()">Nova Partida</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <script src="/js/board.js"></script>
+</body>
+</html>

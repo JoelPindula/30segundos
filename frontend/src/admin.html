@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Segundos - Admin</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <header class="admin-header">
+            <h1>🎲 30 Segundos</h1>
+            <p>Configure sua partida</p>
+        </header>
+        
+        <main class="admin-main">
+            <!-- Nome da Partida -->
+            <section class="config-section">
+                <h2>🎮 Nome da Partida</h2>
+                <input type="text" id="gameName" class="text-input" value="Partida 30 Segundos" placeholder="Nome da partida">
+            </section>
+            
+            <!-- Times -->
+            <section class="config-section">
+                <h2>👥 Times</h2>
+                
+                <div class="teams-config">
+                    <!-- Time 1 -->
+                    <div class="team-config yellow-team">
+                        <h3>🟡 Time Amarelo</h3>
+                        <input type="text" id="team1Name" class="text-input" value="Time Amarelo" placeholder="Nome do time">
+                        <div class="players-list" id="team1Players">
+                            <div class="player-item">
+                                <input type="text" class="player-input" placeholder="Jogador 1" value="">
+                                <button type="button" class="btn-remove" onclick="removePlayer(this)">✕</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-player" onclick="addPlayer(1)">+ Adicionar Jogador</button>
+                    </div>
+                    
+                    <!-- Time 2 -->
+                    <div class="team-config blue-team">
+                        <h3>🔵 Time Azul</h3>
+                        <input type="text" id="team2Name" class="text-input" value="Time Azul" placeholder="Nome do time">
+                        <div class="players-list" id="team2Players">
+                            <div class="player-item">
+                                <input type="text" class="player-input" placeholder="Jogador 1" value="">
+                                <button type="button" class="btn-remove" onclick="removePlayer(this)">✕</button>
+                            </div>
+                        </div>
+                        <button type="button" class="btn-add-player" onclick="addPlayer(2)">+ Adicionar Jogador</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Configurações de Jogo -->
+            <section class="config-section">
+                <h2>⚙️ Configurações</h2>
+                <div class="config-row">
+                    <div class="config-item">
+                        <label for="roundTime">⏱️ Tempo por Rodada</label>
+                        <select id="roundTime" class="select-input">
+                            <option value="20">20 segundos</option>
+                            <option value="30" selected>30 segundos</option>
+                            <option value="45">45 segundos</option>
+                            <option value="60">60 segundos</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label for="wordsPerSide">📝 Palavras por Lado</label>
+                        <select id="wordsPerSide" class="select-input">
+                            <option value="3">3 palavras</option>
+                            <option value="5" selected>5 palavras</option>
+                            <option value="7">7 palavras</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Temas -->
+            <section class="config-section">
+                <h2>📚 Temas</h2>
+                <p class="section-hint">Selecione os temas das palavras</p>
+                <div class="checkbox-grid" id="themesContainer">
+                    <p class="loading-text">Carregando temas...</p>
+                </div>
+            </section>
+            
+            <!-- Níveis -->
+            <section class="config-section">
+                <h2>📊 Níveis de Dificuldade</h2>
+                <p class="section-hint">Selecione os níveis das palavras</p>
+                <div class="checkbox-grid" id="levelsContainer">
+                    <p class="loading-text">Carregando níveis...</p>
+                </div>
+            </section>
+            
+            <!-- Botão Criar -->
+            <section class="config-section">
+                <button class="btn-create" onclick="createGame()">
+                    🚀 Criar Partida
+                </button>
+            </section>
+        </main>
+        
+        <footer class="admin-footer">
+            <a href="/">← Voltar ao Menu</a>
+        </footer>
+    </div>
+    
+    <script src="/js/admin.js"></script>
+</body>
+</html>

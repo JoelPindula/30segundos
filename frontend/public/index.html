@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Segundos - Jogo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .welcome {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            color: #b0b0b0;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        a {
+            display: block;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .admin { border-left: 4px solid #3498db; }
+        .board { border-left: 4px solid #2ecc71; }
+        .player { border-left: 4px solid #f1c40f; }
+    </style>
+</head>
+<body>
+    <div class="welcome">
+        <h1>🎮 30 Segundos</h1>
+        <p>Escolha como deseja acessar o jogo:</p>
+        
+        <div class="links">
+            <a href="/admin" class="admin">
+                ⚙️ Administração
+                <small style="display: block; font-size: 0.8rem; opacity: 0.7;">
+                    Criar e gerenciar partidas
+                </small>
+            </a>
+            
+            <a href="/board" class="board">
+                📺 Tabuleiro
+                <small style="display: block; font-size: 0.8rem; opacity: 0.7;">
+                    TV / Projetor
+                </small>
+            </a>
+            
+            <a href="/player" class="player">
+                📱 Jogador
+                <small style="display: block; font-size: 0.8rem; opacity: 0.7;">
+                    Celular / Tablet
+                </small>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

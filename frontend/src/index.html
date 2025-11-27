@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Segundos - Menu</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        .menu-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+        
+        .title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #f1c40f, #e74c3c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+        
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .menu-btn {
+            padding: 20px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all var(--transition);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .menu-btn-primary {
+            background: linear-gradient(135deg, var(--yellow), #f39c12);
+            color: var(--text-dark);
+            box-shadow: 0 5px 20px rgba(241, 196, 15, 0.3);
+        }
+        
+        .menu-btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(241, 196, 15, 0.4);
+        }
+        
+        .menu-btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-white);
+            border: 2px solid var(--bg-light);
+        }
+        
+        .menu-btn-secondary:hover {
+            border-color: var(--yellow);
+            background: var(--bg-light);
+        }
+        
+        .active-games {
+            margin-top: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .active-games h3 {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+        
+        .games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .game-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            border: 1px solid var(--bg-light);
+        }
+        
+        .game-item-info {
+            text-align: left;
+        }
+        
+        .game-item-name {
+            font-weight: bold;
+            color: var(--text-white);
+        }
+        
+        .game-item-code {
+            font-family: monospace;
+            color: var(--yellow);
+            font-size: 0.9rem;
+        }
+        
+        .game-item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .game-item-btn {
+            padding: 8px 15px;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+        }
+        
+        .btn-board {
+            background: var(--green);
+        }
+        
+        .btn-player {
+            background: var(--blue);
+        }
+        
+        .no-games {
+            color: var(--text-muted);
+            font-style: italic;
+            padding: 20px;
+        }
+        
+        .version {
+            margin-top: 40px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div class="logo">🎲</div>
+        <h1 class="title">30 Segundos</h1>
+        <p class="subtitle">O jogo de palavras mais divertido!</p>
+        
+        <div class="menu-buttons">
+            <a href="/admin" class="menu-btn menu-btn-primary">
+                🎮 Nova Partida
+            </a>
+            <a href="#" class="menu-btn menu-btn-secondary" onclick="showJoinModal()">
+                📱 Entrar em Partida
+            </a>
+        </div>
+        
+        <div class="active-games" id="activeGames">
+            <h3>📋 Partidas Ativas</h3>
+            <div class="games-list" id="gamesList">
+                <p class="no-games">Carregando...</p>
+            </div>
+        </div>
+        
+        <p class="version">Versão 3.1</p>
+    </div>
+    
+    <!-- Modal Entrar -->
+    <div id="joinModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 400px; padding: 30px; text-align: center;">
+            <h2 style="margin-bottom: 20px;">📱 Entrar em Partida</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Digite o código da partida:</p>
+            <input type="text" id="gameCodeInput" class="text-input" 
+                   style="text-align: center; font-size: 1.5rem; letter-spacing: 5px; text-transform: uppercase;"
+                   maxlength="4" placeholder="____">
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button class="btn-secondary" onclick="closeJoinModal()" style="flex: 1;">Cancelar</button>
+                <button class="btn-primary" onclick="joinGame()" style="flex: 1;">Entrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Carrega partidas ativas
+        async function loadActiveGames() {
+            try {
+                const response = await fetch('/api/games');
+                const data = await response.json();
+                const games = data.games || [];
+                
+                const container = document.getElementById('gamesList');
+                
+                if (games.length === 0) {
+                    container.innerHTML = '<p class="no-games">Nenhuma partida ativa</p>';
+                    return;
+                }
+                
+                container.innerHTML = games.map(game => `
+                    <div class="game-item">
+                        <div class="game-item-info">
+                            <div class="game-item-name">${game.name}</div>
+                            <div class="game-item-code">Código: ${game.id}</div>
+                        </div>
+                        <div class="game-item-actions">
+                            <a href="/board?game=${game.id}" class="game-item-btn btn-board">Tabuleiro</a>
+                            <a href="/player?game=${game.id}" class="game-item-btn btn-player">Jogador</a>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch (error) {
+                console.error('Erro ao carregar partidas:', error);
+                document.getElementById('gamesList').innerHTML = '<p class="no-games">Erro ao carregar</p>';
+            }
+        }
+        
+        function showJoinModal() {
+            document.getElementById('joinModal').style.display = 'flex';
+            document.getElementById('gameCodeInput').focus();
+        }
+        
+        function closeJoinModal() {
+            document.getElementById('joinModal').style.display = 'none';
+        }
+        
+        function joinGame() {
+            const code = document.getElementById('gameCodeInput').value.trim().toUpperCase();
+            if (code.length === 4) {
+                window.location.href = `/player?game=${code}`;
+            } else {
+                alert('Digite um código de 4 caracteres');
+            }
+        }
+        
+        // Enter para entrar
+        document.getElementById('gameCodeInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') joinGame();
+        });
+        
+        // Carrega ao iniciar
+        loadActiveGames();
+        
+        // Atualiza a cada 10 segundos
+        setInterval(loadActiveGames, 10000);
+    </script>
+</body>
+</html>
